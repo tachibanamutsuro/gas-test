@@ -14,11 +14,13 @@
  * limitations under the License.
  */
 import { hello } from './example-module';
+import { getExample } from './request';
 
 export function onOpen() {
   const ui = SpreadsheetApp.getUi();
   ui.createMenu('GASボタンリスト')
     .addItem('Helloを表示', 'dispHello')
+    .addItem('dispGetAPIを表示', 'dispGetAPI')
     .addToUi();
 }
 
@@ -27,5 +29,14 @@ export function dispHello() {
   ui.showModalDialog(
     HtmlService.createHtmlOutput(`${hello()}!!`).setWidth(300).setHeight(100),
     hello()
+  );
+}
+
+export function dispGetAPI() {
+  const example = getExample();
+  const ui = SpreadsheetApp.getUi();
+  ui.showModalDialog(
+    HtmlService.createHtmlOutput(example.body).setWidth(300).setHeight(100),
+    example.title
   );
 }
