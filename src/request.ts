@@ -18,3 +18,9 @@ export function getExample() {
   const response = UrlFetchApp.fetch(url);
   return JSON.parse(response.getContentText());
 }
+
+export function getExampleById(number: number) {
+  const url = `https://jsonplaceholder.typicode.com/posts/${number}`;
+  const response = UrlFetchApp.fetch(url);
+  return JSON.parse(response.getContentText());
+}

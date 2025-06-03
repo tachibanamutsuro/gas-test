@@ -15,28 +15,33 @@
  */
 import { hello } from './example-module';
 import { getExample } from './request';
+import { writeApiResponseByCell } from './sheet';
 
 export function onOpen() {
   const ui = SpreadsheetApp.getUi();
   ui.createMenu('GASボタンリスト')
     .addItem('Helloを表示', 'dispHello')
     .addItem('dispGetAPIを表示', 'dispGetAPI')
+    .addItem('セルの値よりリクエストdispGetAPIの結果を出力', 'outputCellValue')
     .addToUi();
 }
 
 export function dispHello() {
-  const ui = SpreadsheetApp.getUi();
-  ui.showModalDialog(
-    HtmlService.createHtmlOutput(`${hello()}!!`).setWidth(300).setHeight(100),
-    hello()
-  );
+  disp(hello(), `${hello()}!!`);
 }
 
 export function dispGetAPI() {
   const example = getExample();
-  const ui = SpreadsheetApp.getUi();
-  ui.showModalDialog(
-    HtmlService.createHtmlOutput(example.body).setWidth(300).setHeight(100),
-    example.title
+  disp(example.title, example.body);
+}
+
+export function outputCellValue() {
+  writeApiResponseByCell();
+}
+
+function disp(title: string, message: string) {
+  return SpreadsheetApp.getUi().showModalDialog(
+    HtmlService.createHtmlOutput(message).setWidth(300).setHeight(100),
+    title
   );
 }
